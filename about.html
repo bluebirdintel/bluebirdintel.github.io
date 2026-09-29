@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About | Bluebird_Intel</title>
+<style>
+  :root { --accent: #7fb8ec; --green: #5fbf3a; }
+  html, body { margin: 0; min-height: 100%; background: #000; color: #e3edf7;
+    font-family: system-ui, -apple-system, sans-serif; }
+  #sky { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; z-index: 0; }
+
+  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto;
+    padding: 24px 16px 40px; box-sizing: border-box; }
+
+  /* Nav (same as the works page) */
+  nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 28px; }
+  nav a { font-family: ui-monospace, Menlo, monospace; font-size: 14px; text-decoration: none;
+    color: var(--accent); background: rgba(0,0,0,.75); border: 1px solid rgba(127,184,236,.45);
+    border-radius: 999px; padding: 8px 16px; transition: background .2s, color .2s; }
+  nav a:hover, nav a:focus-visible { background: var(--accent); color: #000; outline: none; }
+  nav a[aria-current="page"] { background: rgba(127,184,236,.18); }
+
+  /* The story card */
+  article { background: rgba(0,0,0,.82); border: 1px solid rgba(127,184,236,.45); border-radius: 14px;
+    padding: 28px; box-shadow: 0 0 40px rgba(127,184,236,.12); }
+  h1 { margin: 0 0 6px; color: var(--accent); font-family: ui-monospace, Menlo, monospace;
+    letter-spacing: .04em; font-size: clamp(22px, 5vw, 32px); text-align: center; }
+  .sub { margin: 0 0 24px; text-align: center; font-family: ui-monospace, Menlo, monospace;
+    font-size: 13px; color: var(--green); letter-spacing: .08em; }
+  article p { margin: 0 0 18px; line-height: 1.75; font-size: 16px; }
+  article p:last-of-type { margin-bottom: 0; }
+  .fly { color: var(--accent); font-family: ui-monospace, Menlo, monospace; }
+  a { color: var(--accent); }
+
+  footer { text-align: center; margin-top: 32px; font-size: 13px; color: #8fa3bd; }
+  footer span { background: rgba(0,0,0,.75); padding: 4px 10px; border-radius: 6px; }
+
+  @media (max-width: 480px) { article { padding: 20px; } article p { font-size: 15px; } }
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<div class="wrap">
+
+  <nav>
+    <a href="index.html">&gt; home</a>
+    <a href="works.html">&gt; works</a>
+    <a href="about.html" aria-current="page">&gt; about</a>
+  </nav>
+
+  <article>
+    <h1>About</h1>
+    <p class="sub">&gt; how the bird learned to fly_</p>
+
+    <p>After years on a casino floor, I noticed my skillset was being held back by handling voucher thefts, stopping drunken fights, and paying large jackpots. I wanted to make a change and chase a dream I'd had since I was a teenager.</p>
+
+    <p>See, I was good at talking to people and handling customer service issues, but I was <em>great</em> at manually tracing stolen vouchers across the floor to the thief, and at building profiles for the executives when guests' problematic behavior warranted longer exclusions. After a decade on the floor, I thought that dream was more achievable.</p>
+
+    <p>I wanted to learn how to hack, and I thought the best way to do that and make good money was by falling for the great cybersecurity bootcamp marketing scheme. I dropped $8k on a bootcamp that I just as quickly dropped out of after seeing I wasn't guaranteed the selling point of a "guaranteed job" after completing it. I switched to self-study with CompTIA and earned my Security+ certification in 2024. I'm currently pursuing CySA+ the same way.</p>
+
+    <p>Along the job-search journey, I fell in love with watching scambaiting. I wanted to do something similar, even if I didn't get on camera myself (which ended up happening anyway). Then I realized that all those years at the casino, I was doing OSINT for the behavior profiles, so maybe I could do the same for scams.</p>
+
+    <p class="fly">So the bird began to fly.</p>
+
+    <p>I started with a recruiter who reached out about casino work with some pretty odd behavior, and then a group using social media to push a strangely registered service they owned, tied to a crypto they also owned, with some extremely shady behavior around it. That turned into a year of learning the basics of blockchain forensics, learning how to read business registries, and cross-referencing everything to build an investigation I later turned over to the authorities.</p>
+
+    <p>I've done misinformation research to disprove false information spreading on social media, deep-dived bot accounts to learn and teach what to look for and how to trace their images back to the source using open-source tools, and built some frameworks along the way.</p>
+
+    <p>I'm currently building more tools to solidify my knowledge and help others, and I'm also open to work. If you'd like to talk, reach me at <a href="mailto:bluebirdintel@proton.me">bluebirdintel@proton.me</a>.</p>
+  </article>
+
+  <footer><span>© 2026 Bluebird Intel LLC</span></footer>
+</div>
+
+<script src="sky.js"></script>
+</body>
+</html>

@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Works | Bluebird_Intel</title>
 <style>
-  :root { --lav: #c8a2e8; --blue: #3fa9f5; }
-  html, body { margin: 0; min-height: 100%; background: #000; color: #e8e0f0;
+  :root { --accent: #7fb8ec; --blue: #5fbf3a; }
+  html, body { margin: 0; min-height: 100%; background: #000; color: #e3edf7;
     font-family: system-ui, -apple-system, sans-serif; }
-  #swirl { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; z-index: 0; }
+  #sky { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; z-index: 0; }
 
   .wrap { position: relative; z-index: 1; max-width: 820px; margin: 0 auto;
     padding: 24px 16px 40px; box-sizing: border-box; }
@@ -16,40 +16,40 @@
   /* Nav */
   nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 28px; }
   nav a { font-family: ui-monospace, Menlo, monospace; font-size: 14px; text-decoration: none;
-    color: var(--lav); background: rgba(0,0,0,.75); border: 1px solid rgba(200,162,232,.45);
+    color: var(--accent); background: rgba(0,0,0,.75); border: 1px solid rgba(127,184,236,.45);
     border-radius: 999px; padding: 8px 16px; transition: background .2s, color .2s; }
-  nav a:hover, nav a:focus-visible { background: var(--lav); color: #000; outline: none; }
+  nav a:hover, nav a:focus-visible { background: var(--accent); color: #000; outline: none; }
 
   /* Heading */
-  header { text-align: center; background: rgba(0,0,0,.75); border: 1px solid rgba(200,162,232,.45);
+  header { text-align: center; background: rgba(0,0,0,.75); border: 1px solid rgba(127,184,236,.45);
     border-radius: 14px; padding: 24px; margin-bottom: 20px; }
-  h1 { margin: 0 0 8px; color: var(--lav); font-family: ui-monospace, Menlo, monospace;
+  h1 { margin: 0 0 8px; color: var(--accent); font-family: ui-monospace, Menlo, monospace;
     letter-spacing: .04em; font-size: clamp(22px, 5vw, 32px); }
   header p { margin: 0; line-height: 1.6; }
 
   /* Work cards */
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-  .work { background: rgba(0,0,0,.78); border: 1px solid rgba(200,162,232,.35); border-radius: 14px;
-    padding: 20px; display: flex; flex-direction: column; box-shadow: 0 0 30px rgba(200,162,232,.08); }
+  .work { background: rgba(0,0,0,.78); border: 1px solid rgba(127,184,236,.35); border-radius: 14px;
+    padding: 20px; display: flex; flex-direction: column; box-shadow: 0 0 30px rgba(127,184,236,.08); }
   .tag { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--blue);
     letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px; }
-  .work h2 { margin: 0 0 8px; font-size: 18px; color: #f1e8fb; }
+  .work h2 { margin: 0 0 8px; font-size: 18px; color: #eef5fc; }
   .work p { margin: 0 0 16px; line-height: 1.55; font-size: 15px; flex: 1; }
-  .work a { color: var(--lav); font-family: ui-monospace, Menlo, monospace; font-size: 14px; }
+  .work a { color: var(--accent); font-family: ui-monospace, Menlo, monospace; font-size: 14px; }
 
-  footer { text-align: center; margin-top: 32px; font-size: 13px; color: #9a8fae; }
+  footer { text-align: center; margin-top: 32px; font-size: 13px; color: #8fa3bd; }
   footer span { background: rgba(0,0,0,.75); padding: 4px 10px; border-radius: 6px; }
 </style>
 </head>
 <body>
-<canvas id="swirl" aria-hidden="true"></canvas>
+<canvas id="sky" aria-hidden="true"></canvas>
 
 <div class="wrap">
 
   <!-- ===== Navigation: swap in your real links ===== -->
   <nav>
     <a href="index.html">&gt; home</a>
-    <a href="https://www.youtube.com/@bluebird_intel-OG target="_blank" rel="noopener">&gt; youtube</a>
+    <a href="https://www.youtube.com/@bluebird_intel-OG" target="_blank" rel="noopener">&gt; youtube</a>
     <a href="https://www.medium.com/@bluebirdintel" target="_blank" rel="noopener">&gt; medium</a>
     <!--<a href="about.html" target="_blank" rel="noopener">&gt; About</a> -->
   </nav>
@@ -94,57 +94,6 @@
   <footer><span>© 2026 Bluebird Intel LLC</span></footer>
 </div>
 
-<script>
-/* Same swirl as the home page */
-const CHARS = ' .,:;-~=+*o#%@', FONT_PX = 14, ARMS = 6, TWIST = 22, SPEED = 0.8, FPS = 30;
-const canvas = document.getElementById('swirl'), ctx = canvas.getContext('2d');
-function mix(a, b, t) { return a.map((v, i) => Math.round(v + (b[i] - v) * t)); }
-const DARK = [40, 18, 60], LAV = [200, 162, 232], PALE = [240, 228, 252];
-const PALETTE = [...CHARS].map((_, i) => {
-  const t = i / (CHARS.length - 1);
-  const c = t < 0.7 ? mix(DARK, LAV, t / 0.7) : mix(LAV, PALE, (t - 0.7) / 0.3);
-  return `rgb(${c[0]},${c[1]},${c[2]})`;
-});
-let W, H, cols, rows, cw, ch, theta, radius;
-function resize() {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  W = innerWidth; H = innerHeight;
-  canvas.width = W * dpr; canvas.height = H * dpr;
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.font = `${FONT_PX}px ui-monospace, Menlo, monospace`;
-  ctx.textBaseline = 'top';
-  cw = ctx.measureText('M').width; ch = FONT_PX;
-  cols = Math.ceil(W / cw); rows = Math.ceil(H / ch);
-  const n = cols * rows, minDim = Math.min(W, H);
-  theta = new Float32Array(n); radius = new Float32Array(n);
-  for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
-    const dx = (x + 0.5) * cw - W / 2, dy = H / 2 - (y + 0.5) * ch, i = y * cols + x;
-    theta[i] = Math.atan2(dy, dx); radius[i] = Math.hypot(dx, dy) / minDim;
-  }
-}
-function draw(t) {
-  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
-  const last = CHARS.length - 1;
-  for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
-    const i = y * cols + x;
-    const v = Math.sin(ARMS * (theta[i] - SPEED * t) + TWIST * radius[i]);
-    let b = (v + 1) / 2;
-    b = b * b * Math.min(1, radius[i] * 6 + 0.2);
-    const idx = Math.round(b * last);
-    if (idx === 0) continue;
-    ctx.fillStyle = PALETTE[idx];
-    ctx.fillText(CHARS[idx], x * cw, y * ch);
-  }
-}
-let lastFrame = 0;
-function loop(ms) {
-  if (ms - lastFrame >= 1000 / FPS) { lastFrame = ms; draw(ms / 1000); }
-  requestAnimationFrame(loop);
-}
-addEventListener('resize', resize);
-resize();
-if (matchMedia('(prefers-reduced-motion: reduce)').matches) draw(0);
-else requestAnimationFrame(loop);
-</script>
+<script src="sky.js"></script>
 </body>
 </html>

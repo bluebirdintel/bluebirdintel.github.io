@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Works | Bluebird Intel</title>
+<title>Works | Bluebird_Intel</title>
 <style>
   :root { --lav: #c8a2e8; --blue: #3fa9f5; }
   html, body { margin: 0; min-height: 100%; background: #000; color: #e8e0f0;
@@ -49,9 +49,9 @@
   <!-- ===== Navigation: swap in your real links ===== -->
   <nav>
     <a href="index.html">&gt; home</a>
-    <a href="https://www.youtube.com/@YOUR_CHANNEL" target="_blank" rel="noopener">&gt; youtube</a>
-    <a href="https://www.tiktok.com/@YOUR_HANDLE" target="_blank" rel="noopener">&gt; tiktok</a>
-    <a href="resume.pdf" target="_blank" rel="noopener">&gt; résumé</a>
+    <a href="https://www.youtube.com/@bluebird_intel-OG target="_blank" rel="noopener">&gt; youtube</a>
+    <a href="https://www.medium.com/@bluebirdintel" target="_blank" rel="noopener">&gt; medium</a>
+    <a href="about.html" target="_blank" rel="noopener">&gt; résumé</a>
   </nav>
 
   <header>
@@ -64,25 +64,31 @@
 
     <div class="work">
       <div class="tag">Tool</div>
-      <h2>Project Name</h2>
-      <p>One or two sentences on what it does and why you built it.</p>
-      <a href="https://github.com/bluebirdintel/REPO_NAME" target="_blank" rel="noopener">view on github →</a>
+      <h2>In the lab</h2>
+      <p>Security tools currently in testing. Repos coming soon.</p>
+      <!-- <a href="https://github.com/bluebirdintel/REPO_NAME" target="_blank" rel="noopener">view on github →</a> -->
     </div>
 
     <div class="work">
       <div class="tag">Investigation</div>
-      <h2>Case or Write-up Title</h2>
-      <p>What you looked into, what you found, and what came of it.</p>
-      <a href="https://medium.com/@YOUR_MEDIUM" target="_blank" rel="noopener">read on medium →</a>
+      <h2>False raids, real scandals, and the price of misinformation</h2>
+      <p>Fake breaking story about an ICE raid that did not happen with sources.</p>
+      <a href="https://medium.com/@bluebirdintel/false-raids-real-scandals-and-the-price-of-misinformation-601d2aadb642" target="_blank" rel="noopener">read on medium →</a>
     </div>
 
-    <div class="work">
+       <div class="work">
       <div class="tag">Video</div>
       <h2>Video Title</h2>
-      <p>A short line about what the video covers.</p>
-      <a href="https://www.youtube.com/@YOUR_CHANNEL" target="_blank" rel="noopener">watch →</a>
+      <div style="aspect-ratio:16/9;margin-bottom:12px;">
+        <iframe src="https://www.youtube-nocookie.com/embed/txZwLuRg2rs"
+          title="Video Title" style="width:100%;height:100%;border:0;border-radius:8px;"
+          allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+          referrerpolicy="strict-origin-when-cross-origin"
+          loading="lazy" allowfullscreen></iframe>
+      </div>
+      <p>The first bluebird_intel video; explaining the beginning and what's to come.</p>
+      <a href="https://www.youtube.com/@bluebird_intel-OG" target="_blank" rel="noopener">more on the channel soon! →</a>
     </div>
-
   </section>
 
   <footer><span>© 2026 Bluebird Intel LLC</span></footer>
@@ -90,7 +96,7 @@
 
 <script>
 /* Same swirl as the home page */
-const CHARS = ' .,:;-~=+*o#%@', FONT_PX = 14, ARMS = 4, TWIST = 22, SPEED = 0.6, FPS = 30;
+const CHARS = ' .,:;-~=+*o#%@', FONT_PX = 14, ARMS = 6, TWIST = 22, SPEED = 0.8, FPS = 30;
 const canvas = document.getElementById('swirl'), ctx = canvas.getContext('2d');
 function mix(a, b, t) { return a.map((v, i) => Math.round(v + (b[i] - v) * t)); }
 const DARK = [40, 18, 60], LAV = [200, 162, 232], PALE = [240, 228, 252];

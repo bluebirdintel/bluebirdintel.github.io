@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Art | Bluebird_Intel</title>
+<style>
+  :root { --accent: #7fb8ec; --green: #5fbf3a; }
+  html, body { margin: 0; min-height: 100%; background: #000; color: #e3edf7;
+    font-family: system-ui, -apple-system, sans-serif; }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 24px 16px 40px; box-sizing: border-box; }
+
+  /* Nav (same as the other pages) */
+  nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 28px; }
+  nav a { font-family: ui-monospace, Menlo, monospace; font-size: 14px; text-decoration: none;
+    color: var(--accent); background: rgba(0,0,0,.75); border: 1px solid rgba(127,184,236,.45);
+    border-radius: 999px; padding: 8px 16px; transition: background .2s, color .2s; }
+  nav a:hover, nav a:focus-visible { background: var(--accent); color: #000; outline: none; }
+  nav a[aria-current="page"] { background: rgba(127,184,236,.18); }
+
+  header { text-align: center; margin-bottom: 24px; }
+  h1 { margin: 0 0 8px; color: var(--accent); font-family: ui-monospace, Menlo, monospace;
+    letter-spacing: .04em; font-size: clamp(22px, 5vw, 32px); }
+  header p { margin: 0; color: #b9c9db; line-height: 1.6; }
+
+  /* One card per piece */
+  .piece { border: 1px solid rgba(127,184,236,.35); border-radius: 14px; overflow: hidden;
+    margin-bottom: 24px; background: #000; }
+  .stage { position: relative; aspect-ratio: 16 / 9; background: #000; }
+  .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .info { display: flex; gap: 16px; align-items: flex-start; justify-content: space-between;
+    padding: 16px 20px; border-top: 1px solid rgba(127,184,236,.2); }
+  .info h2 { margin: 0 0 4px; font-size: 18px; color: #eef5fc; }
+  .info p { margin: 0; line-height: 1.55; font-size: 15px; color: #b9c9db; }
+  .tag { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--green);
+    letter-spacing: .1em; text-transform: uppercase; margin-bottom: 6px; }
+  .full { flex: none; font-family: ui-monospace, Menlo, monospace; font-size: 13px; cursor: pointer;
+    color: var(--accent); background: transparent; border: 1px solid rgba(127,184,236,.45);
+    border-radius: 999px; padding: 6px 12px; }
+  .full:hover, .full:focus-visible { background: var(--accent); color: #000; outline: none; }
+  .stage:fullscreen { aspect-ratio: auto; width: 100vw; height: 100vh; }
+
+  footer { text-align: center; margin-top: 32px; font-size: 13px; color: #8fa3bd; }
+
+  @media (max-width: 560px) { .info { flex-direction: column; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <a href="index.html">&gt; home</a>
+    <a href="works.html">&gt; works</a>
+    <a href="about.html">&gt; about</a>
+    <a href="art.html" aria-current="page">&gt; art</a>
+  </nav>
+
+  <header>
+    <h1>Digital Art</h1>
+    <p>Things I make for fun, drawn entirely in text characters.</p>
+  </header>
+
+  <!-- ===== Pieces: copy a <section class="piece"> block to add another ===== -->
+  <section class="piece">
+    <div class="stage"><canvas data-piece="hypno" aria-label="Animated ASCII self-portrait in a swirl"></canvas></div>
+    <div class="info">
+      <div>
+        <div class="tag">Animation</div>
+        <h2>Hypno</h2>
+        <p>My portrait rendered in colored ASCII. The head turns clockwise while the swirl and my eyes turn counterclockwise.</p>
+      </div>
+      <button class="full" type="button">fullscreen ⤢</button>
+    </div>
+  </section>
+
+  <section class="piece">
+    <div class="stage"><canvas data-piece="bombrun" aria-label="ASCII bluebird dropping bombs as it flies back and forth"></canvas></div>
+    <div class="info">
+      <div>
+        <div class="tag">Animation</div>
+        <h2>Bomb Run</h2>
+        <p>The Bluebird Intel bird on patrol: back and forth, dropping ASCII bombs, with one big one per pass.</p>
+      </div>
+      <button class="full" type="button">fullscreen ⤢</button>
+    </div>
+  </section>
+
+  <footer>© 2026 Bluebird Intel LLC</footer>
+</div>
+
+<script src="art/face-data.js"></script>
+<script src="art/hypno.js"></script>
+<script src="art/bombrun.js"></script>
+<script>
+/* ===== Gallery runner =====
+   Starts each piece, keeps its canvas sharp at any size, only animates
+   the pieces you can actually see, and handles the fullscreen buttons. */
+(() => {
+  const FPS = 30;
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const pieces = [];
+
+  document.querySelectorAll('canvas[data-piece]').forEach(canvas => {
+    const make = window.ART && window.ART[canvas.dataset.piece];
+    if (!make) return;
+    const item = { canvas, art: make(canvas), visible: false, w: 0, h: 0 };
+    pieces.push(item);
+
+    // Match the canvas pixels to its on-screen size (and the screen's pixel density)
+    const fit = () => {
+      const r = canvas.getBoundingClientRect();
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      item.w = r.width; item.h = r.height;
+      canvas.width = Math.round(r.width * dpr); canvas.height = Math.round(r.height * dpr);
+      canvas.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+      item.art.resize(r.width, r.height);
+      if (still) item.art.draw(2);
+    };
+    new ResizeObserver(fit).observe(canvas);
+
+    // Only animate while on screen, to save battery on phones
+    new IntersectionObserver(([e]) => { item.visible = e.isIntersecting; }).observe(canvas);
+
+    // Fullscreen button toggles the whole stage
+    const stage = canvas.parentElement;
+    stage.closest('.piece').querySelector('.full').addEventListener('click', () => {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (stage.requestFullscreen) stage.requestFullscreen();
+    });
+  });
+
+  if (still) return;
+  let last = 0;
+  function loop(ms) {
+    if (ms - last >= 1000 / FPS) {
+      last = ms;
+      for (const p of pieces) if (p.visible && p.w > 0) p.art.draw(ms / 1000);
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
